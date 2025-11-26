@@ -1,0 +1,69 @@
+<div class="row">
+    <div class="col-1 col-sm-1 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+    </div>
+
+    <div class="col-10 col-sm-10 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+        <form method="post" id="frmEncuesta" class="ps-2 pe-4">
+            <input type="hidden" id="id" name="id" value="{{ '{{ encuesta.id }}' }}">
+            <!-- cliente -->
+            <div class="mb-2">
+                <span class="text-danger">*</span>
+                <label for="cliente">Cliente:</label>
+                <input type="text" id="cliente" name="cliente" class="form-control form-control-lg while-waiting"
+                    value="{{ '{{ encuesta.cliente }}' }}" required="true">
+            </div>
+            <!-- reparacion -->
+            <div class="mb-2">
+                <span class="text-danger">*</span>
+                <label for="reparacion">Reparacion:</label>
+                <input type="text" id="reparacion" name="reparacion" class="form-control form-control-lg while-waiting"
+                    value="{{ '{{ encuesta.reparacion }}' }}" required="true">
+            </div>
+            <!-- todoFunciona -->
+            <div class="mb-2">
+                <span class="text-danger">*</span>
+                <label for="todoFunciona">Todo funciona:</label>
+                <select id="todoFunciona" name="todoFunciona" class="form-select form-select-lg while-waiting"
+                    required="true">
+                    <option value="">Seleccione...</option>
+                    <option value="1">Sí</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+            <!-- fueRapido -->
+            <div class="mb-2">
+                <span class="text-danger">*</span>
+                <label for="fueRapido">Fue rápido:</label>
+                <select id="fueRapido" name="fueRapido" class="form-select form-select-lg while-waiting"
+                    required="true">
+                    <option value="">Seleccione...</option>
+                    <option value="1">Sí</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+            <!-- recomiendaServicio -->
+            <div class="mb-2">
+                <span class="text-danger">*</span>
+                <label for="recomiendaServicio">Recomienda servicio:</label>
+                <select id="recomiendaServicio" name="recomiendaServicio"
+                    class="form-select form-select-lg while-waiting" required="true">
+                    <option value="">Seleccione...</option>
+                    <option value="1">Sí</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+            <div class="mb-2 text-end">
+                <button class="btn btn-primary btn-lg while-waiting">
+                    <span class="ng-hide" ng-show="!encuesta.id">Registrar</span>
+                    <span class="ng-hide" ng-show="encuesta.id">Actualizar</span>
+                </button>
+            </div>
+        </form>
+        <div class="div-encuesta"></div>
+    </div>
+
+    <div class="col-1 col-sm-1 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+    </div>
+</div>
+
+<div class="div-to-complete-screen"></div>

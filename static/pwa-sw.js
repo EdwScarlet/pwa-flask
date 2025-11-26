@@ -17,8 +17,8 @@ function remoteAsset(file) {
     // return `https://domingodesarrollando.com/test/jwt/${file ? file : ""}`
 }
 
-function syncNotifications(reg) {}
-function periodicSyncNotifications(reg) {}
+function syncNotifications(reg) { }
+function periodicSyncNotifications(reg) { }
 function pushNotification(reg, title, body) {
     if (Notification.permission !== "granted") {
         console.log("info")
@@ -30,44 +30,44 @@ function pushNotification(reg, title, body) {
         userVisibleOnly: true,
         applicationServerKey: "GENERA_TU_APPLICATION_SERVER_KEY"
     })
-    .then(function (pushSubscription) {
-        console.log("info")
-        console.info("Yey!", pushSubscription)
+        .then(function (pushSubscription) {
+            console.log("info")
+            console.info("Yey!", pushSubscription)
 
-        let data = new FormData();
-        data.append("sub", JSON.stringify(pushSubscription))
-        data.append("title", title)
-        data.append("body", body)
+            let data = new FormData();
+            data.append("sub", JSON.stringify(pushSubscription))
+            data.append("title", title)
+            data.append("body", body)
 
-        fetch(asset("web-push-push-server.php"), {
-            method: "POST",
-            body: data
-        })
-        .then(function (res) {
-            res.text()
-        })
-        .then(function (txt) {
-            console.log("log")
-            console.log(txt)
+            fetch(asset("web-push-push-server.php"), {
+                method: "POST",
+                body: data
+            })
+                .then(function (res) {
+                    res.text()
+                })
+                .then(function (txt) {
+                    console.log("log")
+                    console.log(txt)
+                })
+                .catch(function (err) {
+                    console.log("error")
+                    console.error("Boo!", err)
+                })
         })
         .catch(function (err) {
             console.log("error")
             console.error("Boo!", err)
         })
-    })
-    .catch(function (err) {
-        console.log("error")
-        console.error("Boo!", err)
-    })
 }
 
-const PRECACHENAME          = "flask2-precache-v1"
-const SYNCEVENTNAME         = "flask2-sync-notifications"
+const PRECACHENAME = "flask2-precache-v1"
+const SYNCEVENTNAME = "flask2-sync-notifications"
 const PERIODICSYNCEVENTNAME = "flask2-periodic-sync-notifications"
 
-const OFFLINEURL            = asset("offline")
+const OFFLINEURL = asset("offline")
 
-const PRECACHEFILES         = [
+const PRECACHEFILES = [
     asset("static/favicon.ico"),
     asset("static/favicon.png"),
     asset("static/favicon-512x512.png"),
@@ -80,8 +80,8 @@ const PRECACHEFILES         = [
     // dashboard
     asset("dashboard"),
     asset("login"),
-    asset("registros"),
-    asset("registro"),
+    asset("encuestas"),
+    asset("encuesta"),
     asset("notificaciones"),
     asset("static/js/app.js"),
 
@@ -129,7 +129,7 @@ self.addEventListener("message", function (event) {
 self.addEventListener("install", function (event) {
     event.waitUntil(
         (async function () {
-            const cache  = await caches.open(PRECACHENAME)
+            const cache = await caches.open(PRECACHENAME)
             const length = PRECACHEFILES.length
 
             for (let x in PRECACHEFILES) {
@@ -186,28 +186,28 @@ self.addEventListener("activate", function (event) {
 self.addEventListener("fetch", function (event) {
     event.respondWith(
         caches.match(event.request)
-        .then(function (cachedResponse) {
-            return cachedResponse || fetch(event.request).catch(async function (err) {
-                if (event.request.mode === "navigate") {
-                    console.log("error")
-                    console.error("Fetch failed; returning offline page instead.", err)
+            .then(function (cachedResponse) {
+                return cachedResponse || fetch(event.request).catch(async function (err) {
+                    if (event.request.mode === "navigate") {
+                        console.log("error")
+                        console.error("Fetch failed; returning offline page instead.", err)
 
-                    const cache = await caches.open(PRECACHENAME)
-                    const cachedResponse = await cache.match(OFFLINEURL)
+                        const cache = await caches.open(PRECACHENAME)
+                        const cachedResponse = await cache.match(OFFLINEURL)
 
-                    return cachedResponse
-                }
+                        return cachedResponse
+                    }
+                })
             })
-        })
-        .catch(function (err) {
-            console.log("error")
-            console.error("Boo!", err)
-        })
+            .catch(function (err) {
+                console.log("error")
+                console.error("Boo!", err)
+            })
     )
 })
 self.addEventListener("sync", function (event) {
     console.log("info")
-	console.info("sync event", event)
+    console.info("sync event", event)
 
     if (event.tag === SYNCEVENTNAME) {
         event.waitUntil(syncNotifications(registration))
@@ -215,7 +215,7 @@ self.addEventListener("sync", function (event) {
 })
 self.addEventListener("periodicsync", function (event) {
     console.log("info")
-	console.info("periodic sync event", event)
+    console.info("periodic sync event", event)
 
     if (event.tag === PERIODICSYNCEVENTNAME) {
         event.waitUntil(periodicSyncNotifications(registration))

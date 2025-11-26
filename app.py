@@ -21,9 +21,9 @@ con_pool = mysql.connector.pooling.MySQLConnectionPool(
     pool_name="my_pool",
     pool_size=5,
     host="185.232.14.52",
-    database="u760464709_prueba_bd",
-    user="u760464709_prueba_usr",
-    password="FnlRDqu3@A"
+    database="u760464709_22005079_bd",
+    user="u760464709_22005079_usr",
+    password=">5*z!XoxT0"
 )
 
 
@@ -67,13 +67,13 @@ def appLogin():
     return render_template("login.html")
     # return "<h5>Hola, soy la view app</h5>"
 
-@app.route("/registros")
-def registros():
-    return render_template("registros.html")
+@app.route("/encuestas")
+def encuestas():
+    return render_template("encuestas.html")
 
-@app.route("/registro")
-def registro():
-    return render_template("registro.html")
+@app.route("/encuesta")
+def encuesta():
+    return render_template("encuesta.html")
 
 @app.route("/notificaciones")
 def notificaciones():
@@ -112,7 +112,7 @@ def iniciarSesion():
     val    = (usuario, contrasena)
 
     cursor.execute(sql, val)
-    registros = cursor.fetchall()
+    encuestas = cursor.fetchall()
     if cursor:
         cursor.close()
     if con and con.is_connected():
@@ -121,13 +121,13 @@ def iniciarSesion():
     session["login2"]     = False
     session["login2-id"]  = None
     session["login2-usr"] = None
-    if registros:
-        usuario = registros[0]
+    if encuestas:
+        usuario = encuestas[0]
         session["login2"]     = True
         session["login2-id"]  = usuario["id"]
         session["login2-usr"] = usuario["usuario"]
 
-    return make_response(jsonify(registros))
+    return make_response(jsonify(encuestas))
 
 @app.route("/cerrarSesion", methods=["POST"])
 @login
@@ -145,9 +145,9 @@ def preferencias():
     }))
 
 
-@app.route("/registros/buscar", methods=["GET"])
+@app.route("/encuestas/buscar", methods=["GET"])
 @login
-def buscarRegistros():
+def buscarEncuestas():
     args     = request.args
     busqueda = args["busqueda"]
     busqueda = f"%{busqueda}%"
@@ -157,20 +157,23 @@ def buscarRegistros():
         cursor = con.cursor(dictionary=True)
         sql    = """
         SELECT id,
-            descripcion,
-            fechaHora
-        FROM registros
-        WHERE descripcion LIKE %s
+            cliente,
+            reparacion,
+            todoFunciona,
+            fueRapido,
+            recomiendaServicio
+        FROM encuestas_reparaciones
+        WHERE cliente LIKE %s
         ORDER BY id DESC
         LIMIT 25 OFFSET 0
         """
         val    = (busqueda, )
 
         cursor.execute(sql, val)
-        registros = cursor.fetchall()
+        encuestas = cursor.fetchall()
 
     except mysql.connector.errors.ProgrammingError as error:
-        registros = []
+        encuestas = []
 
     finally:
         if cursor:
@@ -178,13 +181,17 @@ def buscarRegistros():
         if con and con.is_connected():
             con.close()
 
-    return make_response(jsonify(registros))
+    return make_response(jsonify(encuestas))
 
-@app.route("/registro/guardar", methods=["POST"])
+@app.route("/encuesta/guardar", methods=["POST"])
 @login
-def guardarRegistro():
+def guardarEncuesta():
     id          = request.form["id"]
-    descripcion = request.form["descripcion"]
+    cliente     = request.form["cliente"]
+    reparacion  = request.form["reparacion"]
+    todoFunciona = request.form["todoFunciona"]
+    fueRapido   = request.form["fueRapido"]
+    recomiendaServicio = request.form["recomiendaServicio"]
     tz          = pytz.timezone("America/Matamoros")
     ahora       = datetime.datetime.now(tz)
     fechaHora   = ahora.strftime("%Y-%m-%d %H:%M:%S")
@@ -194,17 +201,21 @@ def guardarRegistro():
 
     if id:
         sql = """
-        UPDATE registros
-        SET descripcion = %s
+        UPDATE encuestas_reparaciones
+        SET cliente = %s,
+            reparacion = %s,
+            todoFunciona = %s,
+            fueRapido = %s,
+            recomiendaServicio = %s
         WHERE id = %s
         """
-        val = (descripcion, id)
+        val = (cliente, reparacion, todoFunciona, fueRapido, recomiendaServicio, id)
     else:
         sql = """
-        INSERT INTO registros (descripcion, fechaHora)
-        VALUES                (%s,          %s)
+        INSERT INTO encuestas_reparaciones (cliente, reparacion, todoFunciona, fueRapido, recomiendaServicio)
+        VALUES                (%s, %s, %s, %s, %s)
         """
-        val =                 (descripcion, fechaHora)
+        val =                 (cliente, reparacion, todoFunciona, fueRapido, recomiendaServicio)
     
     cursor.execute(sql, val)
     con.commit()
@@ -222,35 +233,35 @@ def guardarRegistro():
         "fechaHora": fechaHora
     }))
 
-@app.route("/registro/<int:id>")
+@app.route("/encuesta/<int:id>")
 @login
-def editarRegistro(id):
+def editarEncuesta(id):
     con    = con_pool.get_connection()
     cursor = con.cursor(dictionary=True)
     sql    = """
-    SELECT id, descripcion, fechaHora
-    FROM registros
+    SELECT id, cliente, reparacion, todoFunciona, fueRapido, recomiendaServicio
+    FROM encuestas_reparaciones
     WHERE id = %s
     """
     val    = (id,)
 
     cursor.execute(sql, val)
-    registros = cursor.fetchall()
+    encuestas = cursor.fetchall()
     if cursor:
         cursor.close()
     if con and con.is_connected():
         con.close()
 
-    return make_response(jsonify(registros))
+    return make_response(jsonify(encuestas))
 
-@app.route("/registro/eliminar", methods=["POST"])
-def eliminarRegistro():
+@app.route("/encuesta/eliminar", methods=["POST"])
+def eliminarEncuesta():
     id = request.form["id"]
 
     con    = con_pool.get_connection()
     cursor = con.cursor(dictionary=True)
     sql    = """
-    DELETE FROM registros
+    DELETE FROM encuestas_reparaciones
     WHERE id = %s
     """
     val    = (id,)
@@ -289,10 +300,10 @@ def cargarNotificaciones():
         val    = (session.get("login2-id"), )
 
         cursor.execute(sql, val)
-        registros = cursor.fetchall()
+        encuestas = cursor.fetchall()
 
     except mysql.connector.errors.ProgrammingError as error:
-        registros = []
+        encuestas = []
 
     finally:
         if cursor:
@@ -300,7 +311,7 @@ def cargarNotificaciones():
         if con and con.is_connected():
             con.close()
 
-    return make_response(jsonify(registros))
+    return make_response(jsonify(encuestas))
 
 @app.route("/notificacion/eliminar", methods=["POST"])
 @login

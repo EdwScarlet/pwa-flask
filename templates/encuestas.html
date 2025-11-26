@@ -1,0 +1,62 @@
+<div class="table-responsive">
+    <table class="table table-sm">
+        <thead class="table-active">
+            <tr>
+                <th>Id</th>
+                <th>Cliente</th>
+                <th>Reparación</th>
+                <th>Todo funciona</th>
+                <th>Fue rápido</th>
+                <th>Recomienda servicio</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="tbodyEncuestas">
+            <tr id="encuestasCargando" class="text-center p-3" ng-if="sendingRequest && encuestas.length == 0">
+                <td colspan="4">
+                    <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;">
+                        <span class="visually-hidden">Cargando...</span>
+                    </div>
+                </td>
+            </tr>
+
+            <tr id="encuestasError" class="text-center p-3"
+                ng-if="!sendingRequest && incompleteRequest && encuestas.length == 0">
+                <td colspan="4">
+                    <i class="bi bi-wifi-off" style="font-size: 2em;"></i>
+                    <p class="fw-bolder">Error en la petición.</p>
+                </td>
+            </tr>
+
+            <tr id="encuestasEmpty" class="text-center p-3"
+                ng-if="!sendingRequest && completeRequest && encuestas.length == 0">
+                <td colspan="4">
+                    <h5>No hay encuestas.</h5>
+                </td>
+            </tr>
+
+            <tr ng-repeat="e in encuestas" ng-if="!sendingRequest && encuestas.length">
+                <td>{{ '{{ e.id }}' }}</td>
+                <td>{{ '{{ e.cliente }}' }}</td>
+                <td>{{ '{{ e.reparacion }}' }}</td>
+                <td>{{ '{{ e.todoFunciona }}' }}</td>
+                <td>{{ '{{ e.fueRapido }}' }}</td>
+                <td>{{ '{{ e.recomiendaServicio }}' }}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary btn-editar-encuesta me-1 mb-1 while-waiting"
+                        data-index="{{ '{{ $index }}' }}" data-id="{{ '{{ e.id }}' }}">
+                        <i class="bi bi-pencil"></i>
+                        <span class="d-none d-lg-block d-xl-block">Editar</span>
+                    </button>
+                    <button class="btn btn-sm btn-danger btn-eliminar-encuesta me-1 mb-1 while-waiting"
+                        data-index="{{ '{{ $index }}' }}" data-id="{{ '{{ e.id }}' }}">
+                        <i class="bi bi-trash"></i>
+                        <span class="d-none d-lg-block d-xl-block">Eliminar</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="div-to-complete-screen"></div>

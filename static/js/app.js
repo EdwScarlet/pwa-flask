@@ -89,14 +89,14 @@ async function regWorker(fun) {
         console.info("Yey!", reg)
 
         navigator.serviceWorker.addEventListener("message", function (event) {
-            const data    = event.data
+            const data = event.data
             const subject = data.subject
             const message = data.message
             if (subject == "installationProgress") {
                 const length = message.length
-                const x      = parseInt(message.x) + 1
+                const x = parseInt(message.x) + 1
 
-                const porcentaje = x/length*100
+                const porcentaje = x / length * 100
 
                 $("#appSplashTextoProgreso").html(`${x} de ${length} archivo(s) ${porcentaje.toFixed(2)} %`)
             }
@@ -124,16 +124,16 @@ async function regSyncNotifications() {
     navigator.serviceWorker.ready.then(function (reg) {
         if ("sync" in reg) {
             reg.sync.register(SYNCEVENTNAME)
-            .then(function () {
-                console.log("info")
-                console.info("Registered background sync")
-            })
-            .catch(function (err) {
-                console.log("error")
-                console.error("Error registering background sync", err)
+                .then(function () {
+                    console.log("info")
+                    console.info("Registered background sync")
+                })
+                .catch(function (err) {
+                    console.log("error")
+                    console.error("Error registering background sync", err)
 
-                syncNotifications(reg)
-            })
+                    syncNotifications(reg)
+                })
         }
     })
 }
@@ -151,14 +151,14 @@ async function regPeriodicSyncNotifications() {
                     reg.periodicSync.register(PERIODICSYNCEVENTNAME, {
                         minInterval: 24 * 60 * 60 * 1000
                     })
-                    .then(function () {
-                        console.log("info")
-                        console.info("Registered periodic background sync")
-                    })
-                    .catch(function (err) {
-                        console.log("error")
-                        console.error("Periodic background sync cannot be used.", err)
-                    })
+                        .then(function () {
+                            console.log("info")
+                            console.info("Registered periodic background sync")
+                        })
+                        .catch(function (err) {
+                            console.log("error")
+                            console.error("Periodic background sync cannot be used.", err)
+                        })
                 }
                 else {
                     console.info("Periodic background sync cannot be used.")
@@ -167,9 +167,9 @@ async function regPeriodicSyncNotifications() {
         }
     })
 }
-function syncNotifications(reg) {}
-function periodicSyncNotifications(reg) {}
-async function unregWorker(redir, /** fun */ ) {
+function syncNotifications(reg) { }
+function periodicSyncNotifications(reg) { }
+async function unregWorker(redir, /** fun */) {
     if (!("serviceWorker" in navigator)) {
         console.log("info")
         console.info("Sin soporte a serviceWorker.")
@@ -178,31 +178,31 @@ async function unregWorker(redir, /** fun */ ) {
     }
 
     navigator.serviceWorker.ready
-    .then(function (reg) {
-        reg.unregister()
-        if ("periodicSync" in reg) {
-            reg.periodicSync.unregister(PERIODICSYNCEVENTNAME)
-        }
-
-        caches.delete(PRECACHENAME)
-        .then(function () {
-            if (typeof fun == "function") {
-                // No soportado en celular el cacheado sin recargar.
-                // regAll(fun)
-                // return
+        .then(function (reg) {
+            reg.unregister()
+            if ("periodicSync" in reg) {
+                reg.periodicSync.unregister(PERIODICSYNCEVENTNAME)
             }
 
-            reload(redir)
+            caches.delete(PRECACHENAME)
+                .then(function () {
+                    if (typeof fun == "function") {
+                        // No soportado en celular el cacheado sin recargar.
+                        // regAll(fun)
+                        // return
+                    }
+
+                    reload(redir)
+                })
+                .catch(function (err) {
+                    console.log("error")
+                    console.error("Boo!", err)
+                })
         })
         .catch(function (err) {
             console.log("error")
             console.error("Boo!", err)
         })
-    })
-    .catch(function (err) {
-        console.log("error")
-        console.error("Boo!", err)
-    })
 }
 function reinstall(redir) {
     if (redir) {
@@ -239,12 +239,12 @@ function remoteAsset(file) {
 }
 function activeMenuOption(href) {
     $("#appMenu .nav-link")
-    .removeClass("active")
-    .removeAttr('aria-current')
+        .removeClass("active")
+        .removeAttr('aria-current')
 
     $(`[href="${(href ? href : "#/")}"]`)
-    .addClass("active")
-    .attr("aria-current", "page")
+        .addClass("active")
+        .attr("aria-current", "page")
 }
 function disableAll() {
     const elements = document.querySelectorAll(".while-waiting")
@@ -271,10 +271,10 @@ function debounce(fun, delay) {
 }
 
 
-const PRECACHENAME          = "flask2-precache-v1"
-const SYNCEVENTNAME         = "flask2-sync-notifications"
+const PRECACHENAME = "flask2-precache-v1"
+const SYNCEVENTNAME = "flask2-sync-notifications"
 const PERIODICSYNCEVENTNAME = "flask2-periodic-sync-notifications"
-const PINGURL               = "ping"
+const PINGURL = "ping"
 
 
 const DateTime = luxon.DateTime
@@ -297,34 +297,34 @@ app.config(function ($routeProvider, $locationProvider) {
     $locationProvider.hashPrefix("")
 
     $routeProvider
-    .when("/", {
-        templateUrl: "login",
-        controller: "loginCtrl"
-    })
-    .when("/registros", {
-        templateUrl: "registros",
-        controller: "registrosCtrl"
-    })
-    .when("/registros/:id", {
-        templateUrl: "registro",
-        controller: "registroCtrl"
-    })
-    .when("/notificaciones", {
-        templateUrl: "notificaciones",
-        controller: "notificacionesCtrl"
-    })
-    .otherwise({
-        redirectTo: "/"
-    })
+        .when("/", {
+            templateUrl: "login",
+            controller: "loginCtrl"
+        })
+        .when("/encuestas", {
+            templateUrl: "encuestas",
+            controller: "encuestasCtrl"
+        })
+        .when("/encuesta/:id", {
+            templateUrl: "encuesta",
+            controller: "encuestaCtrl"
+        })
+        .when("/notificaciones", {
+            templateUrl: "notificaciones",
+            controller: "notificacionesCtrl"
+        })
+        .otherwise({
+            redirectTo: "/"
+        })
 })
-app.run(["$rootScope", "$location", "$timeout", function($rootScope, $location, $timeout) {
-    $rootScope.slide             = ""
-    $rootScope.spinnerGrow       = false
-    $rootScope.sendingRequest    = false
+app.run(["$rootScope", "$location", "$timeout", function ($rootScope, $location, $timeout) {
+    $rootScope.slide = ""
+    $rootScope.spinnerGrow = false
+    $rootScope.sendingRequest = false
     $rootScope.incompleteRequest = false
-    $rootScope.completeRequest   = false
-    $rootScope.login             = localStorage.getItem("flask2-login")
-    const defaultRouteAuth       = "#/notificaciones"
+    $rootScope.completeRequest = false
+    $rootScope.login = localStorage.getItem("flask2-login")
+    const defaultRouteAuth = "#/notificaciones"
     let timesChangesSuccessRoute = 0
 
 
@@ -341,7 +341,7 @@ app.run(["$rootScope", "$location", "$timeout", function($rootScope, $location, 
 
     let preferencias = localStorage.getItem("flask2-preferencias")
     try {
-        preferencias = (preferencias ? JSON.parse(preferencias) :  {})
+        preferencias = (preferencias ? JSON.parse(preferencias) : {})
     }
     catch (error) {
         preferencias = {}
@@ -355,8 +355,8 @@ app.run(["$rootScope", "$location", "$timeout", function($rootScope, $location, 
         }, 1000 * 1)
 
         $rootScope.spinnerGrow = false
-        const path             = current.$$route.originalPath
-        $rootScope.path        = path
+        const path = current.$$route.originalPath
+        $rootScope.path = path
 
 
         // AJAX Setup
@@ -368,9 +368,9 @@ app.run(["$rootScope", "$location", "$timeout", function($rootScope, $location, 
                 Authorization: `Bearer ${localStorage.getItem("flask2-JWT")}`
             },
             error: function (error) {
-                $rootScope.sendingRequest    = false
+                $rootScope.sendingRequest = false
                 $rootScope.incompleteRequest = false
-                $rootScope.completeRequest   = true
+                $rootScope.completeRequest = true
 
                 const status = error.status
                 enableAll()
@@ -385,21 +385,21 @@ app.run(["$rootScope", "$location", "$timeout", function($rootScope, $location, 
                     }
 
                     modal(respuesta, "Error", [
-                        {html: "Aceptar", class: "btn btn-lg btn-secondary", defaultButton: true, dismiss: true}
+                        { html: "Aceptar", class: "btn btn-lg btn-secondary", defaultButton: true, dismiss: true }
                     ])
                 }
                 else {
                     toast("Error en la petici&oacute;n.")
-                    $rootScope.sendingRequest    = false
+                    $rootScope.sendingRequest = false
                     $rootScope.incompleteRequest = true
-                    $rootScope.completeRequest   = false
+                    $rootScope.completeRequest = false
                 }
             },
             statusCode: {
                 200: function (respuesta) {
-                    $rootScope.sendingRequest    = false
+                    $rootScope.sendingRequest = false
                     $rootScope.incompleteRequest = false
-                    $rootScope.completeRequest   = true
+                    $rootScope.completeRequest = true
                 },
                 401: function (respuesta) {
                     cerrarSesion()
@@ -427,8 +427,8 @@ app.run(["$rootScope", "$location", "$timeout", function($rootScope, $location, 
                     })
                 }
                 else if ((path != "/")
-                    &&  (path.indexOf("emailToken") == -1)
-                    &&  (path.indexOf("resetPassToken") == -1)) {
+                    && (path.indexOf("emailToken") == -1)
+                    && (path.indexOf("resetPassToken") == -1)) {
                     window.location = "#/"
                 }
             }
@@ -437,14 +437,14 @@ app.run(["$rootScope", "$location", "$timeout", function($rootScope, $location, 
                 localStorage.removeItem("flask2-login")
                 localStorage.removeItem("flask2-preferencias")
 
-                localStorage.removeItem("flask2-registros")
+                localStorage.removeItem("flask2-encuestas")
                 localStorage.removeItem("flask2-notificaciones")
 
-                const login      = localStorage.getItem("flask2-login")
+                const login = localStorage.getItem("flask2-login")
                 let preferencias = localStorage.getItem("flask2-preferencias")
 
                 try {
-                    preferencias = (preferencias ? JSON.parse(preferencias) :  {})
+                    preferencias = (preferencias ? JSON.parse(preferencias) : {})
                 }
                 catch (error) {
                     preferencias = {}
@@ -453,7 +453,7 @@ app.run(["$rootScope", "$location", "$timeout", function($rootScope, $location, 
                 $rootScope.redireccionar(login, preferencias)
             }
             $rootScope.redireccionar = function (login, preferencias) {
-                $rootScope.login        = login
+                $rootScope.login = login
                 $rootScope.preferencias = preferencias
 
                 validarRedireccionamiento()
@@ -463,35 +463,35 @@ app.run(["$rootScope", "$location", "$timeout", function($rootScope, $location, 
 
             // animate.css
             const active = $("#appMenu .nav-link.active").parent().index()
-            const click  = $(`[href^="#${path}"]`).parent().index()
+            const click = $(`[href^="#${path}"]`).parent().index()
 
             if ((active <= 0)
-            ||  (click  <= 0)
-            ||  (active == click)) {
+                || (click <= 0)
+                || (active == click)) {
                 $rootScope.slide = `animate__animated animate__faster animate__${((click == 0) ? "bounceIn" : "fadeIn")}`
             }
             else if (active != click) {
-                $rootScope.slide  = `animate__animated animate__faster animate__slideIn${((active > click) ? "Left" : "Right")}`
+                $rootScope.slide = `animate__animated animate__faster animate__slideIn${((active > click) ? "Left" : "Right")}`
             }
 
 
             // swipe
             if (path.indexOf("notificaciones") != -1) {
-                $rootScope.leftView      = "Registros"
-                $rootScope.rightView     = ""
-                $rootScope.leftViewLink  = "#/registros"
+                $rootScope.leftView = "Encuestas"
+                $rootScope.rightView = ""
+                $rootScope.leftViewLink = "#/encuestas"
                 $rootScope.rightViewLink = ""
             }
-            else if (path.indexOf("registros") != -1) {
-                $rootScope.leftView      = ""
-                $rootScope.rightView     = "Notificaciones"
-                $rootScope.leftViewLink  = ""
+            else if (path.indexOf("encuestas") != -1) {
+                $rootScope.leftView = ""
+                $rootScope.rightView = "Notificaciones"
+                $rootScope.leftViewLink = ""
                 $rootScope.rightViewLink = "#/notificaciones"
             }
             else {
-                $rootScope.leftView      = ""
-                $rootScope.rightView     = ""
-                $rootScope.leftViewLink  = ""
+                $rootScope.leftView = ""
+                $rootScope.rightView = ""
+                $rootScope.leftViewLink = ""
                 $rootScope.rightViewLink = ""
             }
 
@@ -516,8 +516,8 @@ app.run(["$rootScope", "$location", "$timeout", function($rootScope, $location, 
                     resetDrag()
                 }
 
-                isDragging  = true
-                moved       = false
+                isDragging = true
+                moved = false
                 isScrolling = false
 
                 startX = getX(event)
@@ -528,13 +528,13 @@ app.run(["$rootScope", "$location", "$timeout", function($rootScope, $location, 
             }
             function onDrag(event) {
                 if (!isDragging
-                ||  $(event.target).parents("table").length
-                ||  $(event.target).parents("button").length
-                ||  $(event.target).parents("span").length
-                ||   (event.target.nodeName == "BUTTON")
-                ||   (event.target.nodeName == "SPAN")
-                || $(event.target).parents(".plotly-grafica").length
-                || $(event.target).hasClass("plotly-grafica")) {
+                    || $(event.target).parents("table").length
+                    || $(event.target).parents("button").length
+                    || $(event.target).parents("span").length
+                    || (event.target.nodeName == "BUTTON")
+                    || (event.target.nodeName == "SPAN")
+                    || $(event.target).parents(".plotly-grafica").length
+                    || $(event.target).hasClass("plotly-grafica")) {
                     return
                 }
 
@@ -543,7 +543,7 @@ app.run(["$rootScope", "$location", "$timeout", function($rootScope, $location, 
 
                 let deltaX = x - startX
                 let deltaY = y - startY
-                
+
                 if (isScrolling) {
                     if (isPartiallyVisible($("#appContent").get(0))) {
                         resetDrag()
@@ -637,26 +637,26 @@ app.run(["$rootScope", "$location", "$timeout", function($rootScope, $location, 
             }
             function completeScreen() {
                 $(".div-to-complete-screen").css("height", 0)
-                const altoHtml    = document.documentElement.getBoundingClientRect().height
+                const altoHtml = document.documentElement.getBoundingClientRect().height
                 const altoVisible = document.documentElement.clientHeight
                 $(".div-to-complete-screen").css("height", ((altoHtml < altoVisible)
-                ? (altoVisible - altoHtml)
-                : 0) + (16 * 4))
+                    ? (altoVisible - altoHtml)
+                    : 0) + (16 * 4))
             }
 
             $(document).off("mousedown touchstart mousemove touchmove click", "#appSwipeWrapper")
 
-            $(document).on("mousedown",  "#appSwipeWrapper", startDrag)
+            $(document).on("mousedown", "#appSwipeWrapper", startDrag)
             $(document).on("touchstart", "#appSwipeWrapper", startDrag)
-            $(document).on("mousemove",  "#appSwipeWrapper", onDrag)
+            $(document).on("mousemove", "#appSwipeWrapper", onDrag)
             // $(document).on("touchmove",  "#appSwipeWrapper", onDrag)
             document.querySelector("#appSwipeWrapper").addEventListener("touchmove", onDrag, {
                 passive: false
             })
-            $(document).on("mouseup",    "#appSwipeWrapper", endDrag)
+            $(document).on("mouseup", "#appSwipeWrapper", endDrag)
             $(document).on("mouseleave", "#appSwipeWrapper", endDrag)
-            $(document).on("touchend",   "#appSwipeWrapper", endDrag)
-            $(document).on("click",      "#appSwipeWrapper", function (event) {
+            $(document).on("touchend", "#appSwipeWrapper", endDrag)
+            $(document).on("click", "#appSwipeWrapper", function (event) {
                 if (moved) {
                     event.stopImmediatePropagation()
                     event.preventDefault()
@@ -684,7 +684,7 @@ app.run(["$rootScope", "$location", "$timeout", function($rootScope, $location, 
                 // solo hacer al cargar la página por primera vez
                 if (timesChangesSuccessRoute == 0) {
                     timesChangesSuccessRoute++
-                    
+
 
                     // JQuery Validate
                     $.extend($.validator.messages, {
@@ -706,8 +706,8 @@ app.run(["$rootScope", "$location", "$timeout", function($rootScope, $location, 
                     const startTimeRequest = Date.now()
                     $.get("fechaHora", function (fechaHora) {
                         const endTimeRequest = Date.now()
-                        const rtt            = endTimeRequest - startTimeRequest
-                        const delay          = rtt / 2
+                        const rtt = endTimeRequest - startTimeRequest
+                        const delay = rtt / 2
 
                         const lxFechaHoraServidor = DateTime.fromFormat(fechaHora, "yyyy-MM-dd hh:mm:ss")
                         // const fecha = lxFechaHoraServidor.toFormat("dd/MM/yyyy hh:mm:ss")
@@ -725,7 +725,7 @@ app.run(["$rootScope", "$location", "$timeout", function($rootScope, $location, 
 
                         console.log("✅ Respuesta recibida:", respuesta)
 
-                        const login      = "1"
+                        const login = "1"
                         let preferencias = respuesta
 
                         localStorage.setItem("flask2-login", login)
@@ -744,17 +744,17 @@ app.run(["$rootScope", "$location", "$timeout", function($rootScope, $location, 
 
                         prev.focus()
 
-                        if ("selectionStart" in prev.get(0)){
+                        if ("selectionStart" in prev.get(0)) {
                             $timeout(function () {
                                 prev.get(0).selectionStart = prev.val().length
-                                prev.get(0).selectionEnd   = prev.val().length
+                                prev.get(0).selectionEnd = prev.val().length
                             }, 0)
                         }
 
                         if (prev.attr("type") == "password") {
                             $(this).children().first()
-                            .removeClass("bi-eye")
-                            .addClass("bi-eye-slash")
+                                .removeClass("bi-eye")
+                                .addClass("bi-eye-slash")
                             prev.attr({
                                 "type": "text",
                                 "autocomplete": "off",
@@ -764,8 +764,8 @@ app.run(["$rootScope", "$location", "$timeout", function($rootScope, $location, 
                         }
 
                         $(this).children().first()
-                        .addClass("bi-eye")
-                        .removeClass("bi-eye-slash")
+                            .addClass("bi-eye")
+                            .removeClass("bi-eye-slash")
                         prev.attr({
                             "type": "password",
                             "autocomplete": prev.attr("data-autocomplete")
@@ -809,21 +809,21 @@ app.controller("loginCtrl", function ($scope, $http, $rootScope) {
 })
 
 
-let timesAccessRouteRegistros = 0
-let lsRegistros               = localStorage.getItem("flask2-registros")
-let registros                 = (lsRegistros ? JSON.parse(lsRegistros) : [])
-app.controller("registrosCtrl", function ($scope, $http, $rootScope) {
-    function buscarRegistros() {
-        $rootScope.sendingRequest    = true
+let timesAccessRouteEncuestas = 0
+let lsEncuestas = localStorage.getItem("flask2-encuestas")
+let encuestas = (lsEncuestas ? JSON.parse(lsEncuestas) : [])
+app.controller("encuestasCtrl", function ($scope, $http, $rootScope) {
+    function buscarEncuestas() {
+        $rootScope.sendingRequest = true
         $rootScope.incompleteRequest = false
-        $rootScope.completeRequest   = false
+        $rootScope.completeRequest = false
 
-        $.get("registros/buscar", {
+        $.get("encuestas/buscar", {
             busqueda: ""
         }, function (r) {
-            localStorage.setItem("flask2-registros", JSON.stringify(r))
-            registros        = r
-            $scope.registros = r
+            localStorage.setItem("flask2-encuestas", JSON.stringify(r))
+            encuestas = r
+            $scope.encuentas = r
 
             enableAll()
         })
@@ -831,115 +831,130 @@ app.controller("registrosCtrl", function ($scope, $http, $rootScope) {
         disableAll()
     }
 
-    $scope.registros    = registros
-    $rootScope.registro = {
+    $scope.encuestas = encuestas
+    $rootScope.encuesta = {
         index: "",
         id: "",
-        descripcion: "",
-        fechaHora: ""
+        cliente: "",
+        reparacion: "",
+        todoFunciona: "",
+        fueRapido: "",
+        recomiendaServicio: ""
     }
 
-    if (timesAccessRouteRegistros == 0) {
-        timesAccessRouteRegistros++
+    if (timesAccessRouteEncuestas == 0) {
+        timesAccessRouteEncuestas++
 
-        $(document).on("click", ".btn-editar-registro", function (event) {
+        $(document).on("click", ".btn-editar-encuesta", function (event) {
             const index = parseInt($(this).data("index"))
-            const id    = $(this).data("id")
+            const id = $(this).data("id")
 
-            $rootScope.registro       = registros[index]
-            $rootScope.registro.index = index
+            $rootScope.encuesta = encuestas[index]
+            $rootScope.encuesta.index = index
 
-            window.location = `#/registros/${id}`
+            window.location = `#/encuestas/${id}`
         })
 
-        $(document).on("click", ".btn-eliminar-registro", function (event) {
+        $(document).on("click", ".btn-eliminar-encuesta", function (event) {
             const index = parseInt($(this).data("index"))
-            const id    = $(this).data("id")
+            const id = $(this).data("id")
 
-            modal("Quieres eliminar este registro?", "Confirmación", [
-                {"html": "Cancelar", "class": "btn btn-lg btn-secondary", dismiss: true},
-                {"html": "Eliminar", "class": "btn btn-lg bg-body-tertiary while-waiting", defaultButton: true, fun: function (event) {
-                    $.post("registro/eliminar", {
-                        id: id
-                    }, function (respuesta) {
-                        enableAll()
-                        registros.splice(index, 1)
-                        localStorage.setItem("flask2-registros", JSON.stringify(registros))
-                        $scope.registros = registros
-                        closeModal()
-                    })
+            modal("Quieres eliminar esta encuesta?", "Confirmación", [
+                { "html": "Cancelar", "class": "btn btn-lg btn-secondary", dismiss: true },
+                {
+                    "html": "Eliminar", "class": "btn btn-lg bg-body-tertiary while-waiting", defaultButton: true, fun: function (event) {
+                        $.post("encuesta/eliminar", {
+                            id: id
+                        }, function (respuesta) {
+                            enableAll()
+                            encuestas.splice(index, 1)
+                            localStorage.setItem("flask2-encuestas", JSON.stringify(encuestas))
+                            $scope.encuestas = encuestas
+                            closeModal()
+                        })
 
-                    disableAll()
-                }}])
+                        disableAll()
+                    }
+                }])
         })
 
-        buscarRegistros()
+        buscarEncuestas()
     }
 })
 
 
-let timesAccessRouteRegistro = 0
-app.controller("registroCtrl", function ($scope, $http, $rootScope, $routeParams) {
+let timesAccessRouteEncuesta = 0
+app.controller("encuestaCtrl", function ($scope, $http, $rootScope, $routeParams) {
     let id = $routeParams.id
 
-    if (!$rootScope.registro) {
-        $rootScope.registro = {
+    if (!$rootScope.encuesta) {
+        $rootScope.encuesta = {
             index: "",
             id: "",
-            descripcion: "",
-            fechaHora: ""
+            cliente: "",
+            reparacion: "",
+            todoFunciona: "",
+            fueRapido: "",
+            recomiendaServicio: ""
         }
     }
 
-    if (!$rootScope.registro.id
-    &&  id
-    &&  !isNaN(id)) {
+    if (!$rootScope.encuesta.id
+        && id
+        && !isNaN(id)) {
         disableAll()
         $rootScope.sendingRequest = true
-        $.get(`registro/${id}`, function (registros) {
+        $.get(`encuesta/${id}`, function (encuestas) {
             enableAll()
-            $rootScope.registro = registros[0]
+            $rootScope.encuesta = encuestas[0]
         })
     }
 
-    $('.nav-link[href="#/registros"]').addClass("active")
+    $('.nav-link[href="#/encuestas"]').addClass("active")
 
-    if (timesAccessRouteRegistro == 0) {
-        timesAccessRouteRegistro++
+    if (timesAccessRouteEncuesta == 0) {
+        timesAccessRouteEncuesta++
 
-        $(document).on("submit", "#frmRegistro", function (event) {
+        $(document).on("submit", "#frmEncuesta", function (event) {
             event.preventDefault()
-    
-            $.post("registro/guardar", $(this).serialize(), function (respuesta) {
+
+            $.post("encuesta/guardar", $(this).serialize(), function (respuesta) {
                 enableAll()
 
                 if (respuesta) {
-                    pop(".div-registro", "Registro guardado con &eacute;xito.", "info")
+                    pop(".div-encuesta", "Encuesta guardada con &eacute;xito.", "info")
 
-                    const registro = $rootScope.registro
-                    if (registros.length) {
-                        if (registro.id) {
-                            registros[registro.index] = {
-                                index: registro.index,
-                                id: registro.id,
-                                descripcion: $("#descripcion").val(),
-                                fechaHora: $("#fechaHora").val()
+                    const encuesta = $rootScope.encuesta
+                    if (encuestas.length) {
+                        if (encuesta.id) {
+                            encuestas[encuesta.index] = {
+                                index: encuesta.index,
+                                id: encuesta.id,
+                                cliente: $("#cliente").val(),
+                                reparacion: $("#reparacion").val(),
+                                todoFunciona: $("#todoFunciona").val(),
+                                fueRapido: $("#fueRapido").val(),
+                                recomiendaServicio: $("#recomiendaServicio").val()
                             }
                         }
                         else {
-                            registros.unshift({
+                            encuestas.unshift({
                                 index: 0,
                                 id: respuesta.id,
-                                descripcion: $("#descripcion").val(),
-                                fechaHora: respuesta.fechaHora
+                                cliente: $("#cliente").val(),
+                                reparacion: $("#reparacion").val(),
+                                todoFunciona: $("#todoFunciona").val(),
+                                fueRapido: $("#fueRapido").val(),
+                                recomiendaServicio: $("#recomiendaServicio").val()
                             })
                         }
 
-                        localStorage.setItem("flask2-registros", JSON.stringify(registros))
+                        localStorage.setItem("flask2-encuestas", JSON.stringify(encuestas))
+                        $scope.encuestas = encuestas
                     }
                 }
             })
-    
+
             disableAll()
         })
     }
@@ -947,18 +962,18 @@ app.controller("registroCtrl", function ($scope, $http, $rootScope, $routeParams
 
 
 let timesAccessRouteNotificaciones = 0
-let lsNotificaciones               = localStorage.getItem("flask2-notificaciones")
-let notificaciones                 = (lsNotificaciones ? JSON.parse(lsNotificaciones) : [])
+let lsNotificaciones = localStorage.getItem("flask2-notificaciones")
+let notificaciones = (lsNotificaciones ? JSON.parse(lsNotificaciones) : [])
 app.controller("notificacionesCtrl", function ($scope, $http, $rootScope) {
     function cargarNotificaciones() {
-        $rootScope.sendingRequest    = true
+        $rootScope.sendingRequest = true
         $rootScope.incompleteRequest = false
-        $rootScope.completeRequest   = false
+        $rootScope.completeRequest = false
 
-        $.get("notificaciones/cargar", function (registros) {
-            localStorage.setItem("flask2-notificaciones", JSON.stringify(registros))
-            notificaciones   = registros
-            $scope.registros = registros
+        $.get("notificaciones/cargar", function (encuestas) {
+            localStorage.setItem("flask2-notificaciones", JSON.stringify(encuestas))
+            notificaciones = encuestas
+            $scope.encuestas = encuestas
 
             enableAll()
         })
@@ -966,7 +981,7 @@ app.controller("notificacionesCtrl", function ($scope, $http, $rootScope) {
         disableAll()
     }
 
-    $scope.registros = notificaciones
+    $scope.encuestas = notificaciones
 
     if (timesAccessRouteNotificaciones == 0) {
         timesAccessRouteNotificaciones++
@@ -978,7 +993,7 @@ app.controller("notificacionesCtrl", function ($scope, $http, $rootScope) {
             const button = $(this)
             const id = button.data("id")
 
-            $.post("notificacion/eliminar", {id: id}, function (respuesta) {
+            $.post("notificacion/eliminar", { id: id }, function (respuesta) {
                 cargarNotificaciones()
             })
 
@@ -989,7 +1004,7 @@ app.controller("notificacionesCtrl", function ($scope, $http, $rootScope) {
             const id = p.parent().data("id")
 
             if (p.parent().hasClass("active")) {
-                $.post("notificacion/marcarComoLeida", {id: id}, function (respuesta) {
+                $.post("notificacion/marcarComoLeida", { id: id }, function (respuesta) {
                     p.parent().removeClass("active")
                     p.addClass("p-leer-notificacion")
                     enableAll()
