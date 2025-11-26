@@ -820,10 +820,10 @@ app.controller("encuestasCtrl", function ($scope, $http, $rootScope) {
 
         $.get("encuestas/buscar", {
             busqueda: ""
-        }, function (r) {
-            localStorage.setItem("flask2-encuestas", JSON.stringify(r))
-            encuestas = r
-            $scope.encuentas = r
+        }, function (e) {
+            localStorage.setItem("flask2-encuestas", JSON.stringify(e))
+            encuestas = e
+            $scope.encuestas = e
 
             enableAll()
         })
