@@ -46,7 +46,8 @@
                 <span class="text-danger">*</span>
                 <label for="recomiendaServicio">Recomienda servicio:</label>
                 <select id="recomiendaServicio" name="recomiendaServicio"
-                    class="form-select form-select-lg while-waiting" required="true">
+                    class="form-select form-select-lg while-waiting" value="{{ '{{ encuesta.recomiendaServicio }}' }}"
+                    required="true">
                     <option value="">Seleccione...</option>
                     <option value="1">Sí</option>
                     <option value="0">No</option>
