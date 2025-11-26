@@ -68,8 +68,8 @@ function regAll(fun) {
         console.log("info")
         console.info("Compatible con PushManager.")
 
-        regSyncNotifications()
-        regPeriodicSyncNotifications()
+        // regSyncNotifications()
+        // regPeriodicSyncNotifications()
     }
 }
 async function regWorker(fun) {

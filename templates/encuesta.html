@@ -24,7 +24,7 @@
                 <span class="text-danger">*</span>
                 <label for="todoFunciona">Todo funciona:</label>
                 <select id="todoFunciona" name="todoFunciona" class="form-select form-select-lg while-waiting"
-                    required="true">
+                    value="{{ '{{ encuesta.todoFunciona }}' }}" required="true">
                     <option value="">Seleccione...</option>
                     <option value="1">Sí</option>
                     <option value="0">No</option>
@@ -35,7 +35,7 @@
                 <span class="text-danger">*</span>
                 <label for="fueRapido">Fue rápido:</label>
                 <select id="fueRapido" name="fueRapido" class="form-select form-select-lg while-waiting"
-                    required="true">
+                    value="{{ '{{ encuesta.fueRapido }}' }}" required="true">
                     <option value="">Seleccione...</option>
                     <option value="1">Sí</option>
                     <option value="0">No</option>
