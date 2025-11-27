@@ -6,13 +6,18 @@
         <form method="post" id="frmInicioSesion">
             <div class="mb-2">
                 <label for="usuario">Usuario:</label>
-                <input type="text" id="usuario" name="usuario" class="form-control form-control-lg while-waiting" autocomplete="username" spellcheck="false" required autofocus>
+                <input type="text" id="usuario" name="usuario" value="admin"
+                    class="form-control form-control-lg while-waiting" autocomplete="username" spellcheck="false"
+                    required autofocus>
             </div>
             <div class="mb-2">
                 <label for="contrasena">Contraseña:</label>
                 <div class="input-group">
-                    <input type="password" id="contrasena" name="contrasena" class="form-control form-control-lg while-waiting" autocomplete="current-password" minlength="4" maxlength="20" aria-describedby="basic-addon1" required>
-                    <span class="input-group-text toggle-password bg-body" id="basic-addon1" style="font-size: 1.25em; cursor: pointer;"><i class="bi bi-eye"></i></span>
+                    <input type="password" id="contrasena" name="contrasena" value="1234" placeholder="1234"
+                        class="form-control form-control-lg while-waiting" autocomplete="current-password" minlength="4"
+                        maxlength="20" aria-describedby="basic-addon1" required>
+                    <span class="input-group-text toggle-password bg-body" id="basic-addon1"
+                        style="font-size: 1.25em; cursor: pointer;"><i class="bi bi-eye"></i></span>
                 </div>
             </div>
             <div class="mb-2 text-end">

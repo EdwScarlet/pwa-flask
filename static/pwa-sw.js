@@ -86,12 +86,7 @@ const PRECACHEFILES = [
     asset("static/js/app.js"),
 
     // landing page
-    asset("static/w3/w3.css"),
-    asset("static/w3/app.jpg"),
-    asset("static/w3/app2.jpg"),
-    asset("static/w3/app4.jpg"),
-    asset("static/w3/app5.jpg"),
-    asset("static/w3/img_app.jpg"),
+    asset("static/js/tailwind.js"),
     "https://fonts.googleapis.com/css?family=Poppins",
     "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css",
 

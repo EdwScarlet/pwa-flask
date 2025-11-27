@@ -22,53 +22,25 @@
             <!-- todoFunciona -->
             <div class="mb-2">
                 <span class="text-danger">*</span>
-                <label class="d-block mb-1">Todo funciona:</label>
-
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input while-waiting" type="radio" name="todoFunciona" id="todoFuncionaSi"
-                        ng-model="encuesta.todoFunciona" ng-value="Sí" required>
-                    <label class="form-check-label" for="todoFuncionaSi">Sí</label>
-                </div>
-
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input while-waiting" type="radio" name="todoFunciona" id="todoFuncionaNo"
-                        ng-model="encuesta.todoFunciona" ng-value="No" required>
-                    <label class="form-check-label" for="todoFuncionaNo">No</label>
-                </div>
+                <label for="todoFunciona">¿Todo funciona?</label>
+                <input type="text" id="todoFunciona" name="todoFunciona"
+                    class="form-control form-control-lg while-waiting" value="{{ '{{ encuesta.todoFunciona }}' }}"
+                    required="true">
             </div>
             <!-- fueRapido -->
             <div class="mb-2">
                 <span class="text-danger">*</span>
-                <label class="d-block mb-1">Fue rápido:</label>
-
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input while-waiting" type="radio" name="fueRapido" id="fueRapidoSi"
-                        ng-model="encuesta.fueRapido" ng-value="Sí" required>
-                    <label class="form-check-label" for="fueRapidoSi">Sí</label>
-                </div>
-
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input while-waiting" type="radio" name="fueRapido" id="fueRapidoNo"
-                        ng-model="encuesta.fueRapido" ng-value="No" required>
-                    <label class="form-check-label" for="fueRapidoNo">No</label>
-                </div>
+                <label for="fueRapido">¿Fue rápido?</label>
+                <input type="text" id="fueRapido" name="fueRapido" class="form-control form-control-lg while-waiting"
+                    value="{{ '{{ encuesta.fueRapido }}' }}" required="true">
             </div>
             <!-- recomiendaServicio -->
             <div class="mb-2">
                 <span class="text-danger">*</span>
-                <label class="d-block mb-1">Recomienda servicio:</label>
-
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input while-waiting" type="radio" name="recomiendaServicio"
-                        id="recomiendaServicioSi" ng-model="encuesta.recomiendaServicio" ng-value="Sí" required>
-                    <label class="form-check-label" for="recomiendaServicioSi">Sí</label>
-                </div>
-
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input while-waiting" type="radio" name="recomiendaServicio"
-                        id="recomiendaServicioNo" ng-model="encuesta.recomiendaServicio" ng-value="No" required>
-                    <label class="form-check-label" for="recomiendaServicioNo">No</label>
-                </div>
+                <label for="recomiendaServicio">¿Recomienda el servicio?</label>
+                <input type="text" id="recomiendaServicio" name="recomiendaServicio"
+                    class="form-control form-control-lg while-waiting" value="{{ '{{ encuesta.recomiendaServicio }}' }}"
+                    required="true">
             </div>
             <div class="mb-2 text-end">
                 <button class="btn btn-primary btn-lg while-waiting">
