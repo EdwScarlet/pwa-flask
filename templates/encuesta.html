@@ -24,10 +24,10 @@
                 <span class="text-danger">*</span>
                 <label for="todoFunciona">Todo funciona:</label>
                 <select id="todoFunciona" name="todoFunciona" class="form-select form-select-lg while-waiting"
-                    value="{{ '{{ encuesta.todoFunciona }}' }}" required="true">
+                    ng-model="encuesta.todoFunciona" required="true">
                     <option value="">Seleccione...</option>
-                    <option value="1">Sí</option>
-                    <option value="0">No</option>
+                    <option ng-value="1">Sí</option>
+                    <option ng-value="0">No</option>
                 </select>
             </div>
             <!-- fueRapido -->
@@ -35,10 +35,10 @@
                 <span class="text-danger">*</span>
                 <label for="fueRapido">Fue rápido:</label>
                 <select id="fueRapido" name="fueRapido" class="form-select form-select-lg while-waiting"
-                    value="{{ '{{ encuesta.fueRapido }}' }}" required="true">
+                    ng-model="encuesta.fueRapido" required="true">
                     <option value="">Seleccione...</option>
-                    <option value="1">Sí</option>
-                    <option value="0">No</option>
+                    <option ng-value="1">Sí</option>
+                    <option ng-value="0">No</option>
                 </select>
             </div>
             <!-- recomiendaServicio -->
@@ -46,11 +46,11 @@
                 <span class="text-danger">*</span>
                 <label for="recomiendaServicio">Recomienda servicio:</label>
                 <select id="recomiendaServicio" name="recomiendaServicio"
-                    class="form-select form-select-lg while-waiting" value="{{ '{{ encuesta.recomiendaServicio }}' }}"
+                    class="form-select form-select-lg while-waiting" ng-model="encuesta.recomiendaServicio"
                     required="true">
                     <option value="">Seleccione...</option>
-                    <option value="1">Sí</option>
-                    <option value="0">No</option>
+                    <option ng-value="1">Sí</option>
+                    <option ng-value="0">No</option>
                 </select>
             </div>
             <div class="mb-2 text-end">
