@@ -39,9 +39,9 @@
                 <td>{{ '{{ e.id }}' }}</td>
                 <td>{{ '{{ e.cliente }}' }}</td>
                 <td>{{ '{{ e.reparacion }}' }}</td>
-                <td>{{ '{{ e.todoFunciona }}' }}</td>
-                <td>{{ '{{ e.fueRapido }}' }}</td>
-                <td>{{ '{{ e.recomiendaServicio }}' }}</td>
+                <td>{{ '{{ (e.todoFunciona == 1) ? "Sí" : "No" }}' }}</td>
+                <td>{{ '{{ (e.fueRapido == 1) ? "Sí" : "No" }}' }}</td>
+                <td>{{ '{{ (e.recomiendaServicio == 1) ? "Sí" : "No" }}' }}</td>
                 <td>
                     <button class="btn btn-sm btn-primary btn-editar-encuesta me-1 mb-1 while-waiting"
                         data-index="{{ '{{ $index }}' }}" data-id="{{ '{{ e.id }}' }}">
