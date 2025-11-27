@@ -22,36 +22,53 @@
             <!-- todoFunciona -->
             <div class="mb-2">
                 <span class="text-danger">*</span>
-                <label for="todoFunciona">Todo funciona:</label>
-                <select id="todoFunciona" name="todoFunciona" class="form-select form-select-lg while-waiting"
-                    ng-model="encuesta.todoFunciona" required="true">
-                    <option value="">Seleccione...</option>
-                    <option ng-value="1">Sí</option>
-                    <option ng-value="0">No</option>
-                </select>
+                <label class="d-block mb-1">Todo funciona:</label>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input while-waiting" type="radio" name="todoFunciona" id="todoFuncionaSi"
+                        ng-model="encuesta.todoFunciona" ng-value="1" required>
+                    <label class="form-check-label" for="todoFuncionaSi">Sí</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input while-waiting" type="radio" name="todoFunciona" id="todoFuncionaNo"
+                        ng-model="encuesta.todoFunciona" ng-value="0" required>
+                    <label class="form-check-label" for="todoFuncionaNo">No</label>
+                </div>
             </div>
             <!-- fueRapido -->
             <div class="mb-2">
                 <span class="text-danger">*</span>
-                <label for="fueRapido">Fue rápido:</label>
-                <select id="fueRapido" name="fueRapido" class="form-select form-select-lg while-waiting"
-                    ng-model="encuesta.fueRapido" required="true">
-                    <option value="">Seleccione...</option>
-                    <option ng-value="1">Sí</option>
-                    <option ng-value="0">No</option>
-                </select>
+                <label class="d-block mb-1">Fue rápido:</label>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input while-waiting" type="radio" name="fueRapido" id="fueRapidoSi"
+                        ng-model="encuesta.fueRapido" ng-value="1" required>
+                    <label class="form-check-label" for="fueRapidoSi">Sí</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input while-waiting" type="radio" name="fueRapido" id="fueRapidoNo"
+                        ng-model="encuesta.fueRapido" ng-value="0" required>
+                    <label class="form-check-label" for="fueRapidoNo">No</label>
+                </div>
             </div>
             <!-- recomiendaServicio -->
             <div class="mb-2">
                 <span class="text-danger">*</span>
-                <label for="recomiendaServicio">Recomienda servicio:</label>
-                <select id="recomiendaServicio" name="recomiendaServicio"
-                    class="form-select form-select-lg while-waiting" ng-model="encuesta.recomiendaServicio"
-                    required="true">
-                    <option value="">Seleccione...</option>
-                    <option ng-value="1">Sí</option>
-                    <option ng-value="0">No</option>
-                </select>
+                <label class="d-block mb-1">Recomienda servicio:</label>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input while-waiting" type="radio" name="recomiendaServicio"
+                        id="recomiendaServicioSi" ng-model="encuesta.recomiendaServicio" ng-value="1" required>
+                    <label class="form-check-label" for="recomiendaServicioSi">Sí</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input while-waiting" type="radio" name="recomiendaServicio"
+                        id="recomiendaServicioNo" ng-model="encuesta.recomiendaServicio" ng-value="0" required>
+                    <label class="form-check-label" for="recomiendaServicioNo">No</label>
+                </div>
             </div>
             <div class="mb-2 text-end">
                 <button class="btn btn-primary btn-lg while-waiting">
