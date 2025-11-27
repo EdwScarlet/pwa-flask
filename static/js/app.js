@@ -324,7 +324,7 @@ app.run(["$rootScope", "$location", "$timeout", function ($rootScope, $location,
     $rootScope.incompleteRequest = false
     $rootScope.completeRequest = false
     $rootScope.login = localStorage.getItem("flask2-login")
-    const defaultRouteAuth = "#/notificaciones"
+    const defaultRouteAuth = "#/encuestas"
     let timesChangesSuccessRoute = 0
 
 
