@@ -10,7 +10,7 @@ from flask import Flask, render_template, request, jsonify, make_response, sessi
 from flask_cors import CORS, cross_origin
 
 import mysql.connector.pooling
-import pusher
+# import pusher
 import pytz
 import datetime
 
@@ -35,12 +35,11 @@ def manifest():
 def pwaSW():
     return app.send_static_file("pwa-sw.js")
 
-
-def pusherModulo():
-    pusher_client = pusher.Pusher()
+# def pusherModulo():
+#     pusher_client = pusher.Pusher()
     
-    pusher_client.trigger("canalModulos", "eventoModulo", {})
-    return make_response(jsonify({}))
+#     pusher_client.trigger("canalModulos", "eventoModulo", {})
+#     return make_response(jsonify({}))
 
 def login(fun):
     @wraps(fun)
@@ -75,14 +74,13 @@ def encuestas():
 def encuesta():
     return render_template("encuesta.html")
 
-@app.route("/notificaciones")
-def notificaciones():
-    return render_template("notificaciones.html")
+# @app.route("/notificaciones")
+# def notificaciones():
+#     return render_template("notificaciones.html")
 
 @app.route("/offline")
 def offline():
     return render_template("offline.html")
-
 
 @app.route("/ping")
 def ping():
@@ -276,52 +274,52 @@ def eliminarEncuesta():
     return make_response(jsonify({}))
 
 
-@app.route("/notificaciones/cargar", methods=["GET"])
-@login
-def cargarNotificaciones():
-    # args     = request.args
-    # busqueda = args["busqueda"]
-    # busqueda = f"%{busqueda}%"
+# @app.route("/notificaciones/cargar", methods=["GET"])
+# @login
+# def cargarNotificaciones():
+#     # args     = request.args
+#     # busqueda = args["busqueda"]
+#     # busqueda = f"%{busqueda}%"
 
-    try:
-        con    = con_pool.get_connection()
-        cursor = con.cursor(dictionary=True)
-        sql    = """
-        SELECT id,
-            titulo,
-            contenido,
-            fechaHora,
-            `READ`
-        FROM notificaciones
-        WHERE notificaciones.usuario = %s
-        ORDER BY id DESC
-        LIMIT 25 OFFSET 0
-        """
-        val    = (session.get("login2-id"), )
+#     try:
+#         con    = con_pool.get_connection()
+#         cursor = con.cursor(dictionary=True)
+#         sql    = """
+#         SELECT id,
+#             titulo,
+#             contenido,
+#             fechaHora,
+#             `READ`
+#         FROM notificaciones
+#         WHERE notificaciones.usuario = %s
+#         ORDER BY id DESC
+#         LIMIT 25 OFFSET 0
+#         """
+#         val    = (session.get("login2-id"), )
 
-        cursor.execute(sql, val)
-        encuestas = cursor.fetchall()
+#         cursor.execute(sql, val)
+#         encuestas = cursor.fetchall()
 
-    except mysql.connector.errors.ProgrammingError as error:
-        encuestas = []
+#     except mysql.connector.errors.ProgrammingError as error:
+#         encuestas = []
 
-    finally:
-        if cursor:
-            cursor.close()
-        if con and con.is_connected():
-            con.close()
+#     finally:
+#         if cursor:
+#             cursor.close()
+#         if con and con.is_connected():
+#             con.close()
 
-    return make_response(jsonify(encuestas))
+#     return make_response(jsonify(encuestas))
 
-@app.route("/notificacion/eliminar", methods=["POST"])
-@login
-def eliminarNotificacion():
-    return "eliminar"
+# @app.route("/notificacion/eliminar", methods=["POST"])
+# @login
+# def eliminarNotificacion():
+#     return "eliminar"
 
-@app.route("/notificacion/marcarComoLeida", methods=["POST"])
-@login
-def marcarNotificacionComoLeida():
-    return "leida"
+# @app.route("/notificacion/marcarComoLeida", methods=["POST"])
+# @login
+# def marcarNotificacionComoLeida():
+#     return "leida"
 
 if __name__ == "__main__":
     app.run()

@@ -19,47 +19,47 @@ function remoteAsset(file) {
 
 function syncNotifications(reg) { }
 function periodicSyncNotifications(reg) { }
-function pushNotification(reg, title, body) {
-    if (Notification.permission !== "granted") {
-        console.log("info")
-        console.info("Sin permisos para enviar notificaciones.")
-        return false
-    }
+// function pushNotification(reg, title, body) {
+//     if (Notification.permission !== "granted") {
+//         console.log("info")
+//         console.info("Sin permisos para enviar notificaciones.")
+//         return false
+//     }
 
-    reg.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: "GENERA_TU_APPLICATION_SERVER_KEY"
-    })
-        .then(function (pushSubscription) {
-            console.log("info")
-            console.info("Yey!", pushSubscription)
+//     reg.pushManager.subscribe({
+//         userVisibleOnly: true,
+//         applicationServerKey: "GENERA_TU_APPLICATION_SERVER_KEY"
+//     })
+//         .then(function (pushSubscription) {
+//             console.log("info")
+//             console.info("Yey!", pushSubscription)
 
-            let data = new FormData();
-            data.append("sub", JSON.stringify(pushSubscription))
-            data.append("title", title)
-            data.append("body", body)
+//             let data = new FormData();
+//             data.append("sub", JSON.stringify(pushSubscription))
+//             data.append("title", title)
+//             data.append("body", body)
 
-            fetch(asset("web-push-push-server.php"), {
-                method: "POST",
-                body: data
-            })
-                .then(function (res) {
-                    res.text()
-                })
-                .then(function (txt) {
-                    console.log("log")
-                    console.log(txt)
-                })
-                .catch(function (err) {
-                    console.log("error")
-                    console.error("Boo!", err)
-                })
-        })
-        .catch(function (err) {
-            console.log("error")
-            console.error("Boo!", err)
-        })
-}
+//             fetch(asset("web-push-push-server.php"), {
+//                 method: "POST",
+//                 body: data
+//             })
+//                 .then(function (res) {
+//                     res.text()
+//                 })
+//                 .then(function (txt) {
+//                     console.log("log")
+//                     console.log(txt)
+//                 })
+//                 .catch(function (err) {
+//                     console.log("error")
+//                     console.error("Boo!", err)
+//                 })
+//         })
+//         .catch(function (err) {
+//             console.log("error")
+//             console.error("Boo!", err)
+//         })
+// }
 
 const PRECACHENAME = "flask2-precache-v1"
 const SYNCEVENTNAME = "flask2-sync-notifications"
@@ -82,7 +82,7 @@ const PRECACHEFILES = [
     asset("login"),
     asset("encuestas"),
     asset("encuesta"),
-    asset("notificaciones"),
+    // asset("notificaciones"),
     asset("static/js/app.js"),
 
     // landing page
@@ -178,11 +178,13 @@ self.addEventListener("install", function (event) {
         */
     )
 })
+
 self.addEventListener("activate", function (event) {
     // the old version is gone now, do what you couldn't
     // do while it was still around
     // event.waitUntil()
 })
+
 self.addEventListener("fetch", function (event) {
     event.respondWith(
         caches.match(event.request)
@@ -205,31 +207,34 @@ self.addEventListener("fetch", function (event) {
             })
     )
 })
-self.addEventListener("sync", function (event) {
-    console.log("info")
-    console.info("sync event", event)
 
-    if (event.tag === SYNCEVENTNAME) {
-        event.waitUntil(syncNotifications(registration))
-    }
-})
-self.addEventListener("periodicsync", function (event) {
-    console.log("info")
-    console.info("periodic sync event", event)
+// self.addEventListener("sync", function (event) {
+//     console.log("info")
+//     console.info("sync event", event)
+//
+//     if (event.tag === SYNCEVENTNAME) {
+//         event.waitUntil(syncNotifications(registration))
+//     }
+// })
 
-    if (event.tag === PERIODICSYNCEVENTNAME) {
-        event.waitUntil(periodicSyncNotifications(registration))
-    }
-})
-self.addEventListener("push", function (event) {
-    console.log("info")
-    console.info(event.data)
+// self.addEventListener("periodicsync", function (event) {
+//     console.log("info")
+//     console.info("periodic sync event", event)
+//
+//     if (event.tag === PERIODICSYNCEVENTNAME) {
+//         event.waitUntil(periodicSyncNotifications(registration))
+//     }
+// })
 
-    const data = event.data.json()
+// self.addEventListener("push", function (event) {
+//     console.log("info")
+//     console.info(event.data)
 
-    self.registration.showNotification(data.title, {
-        body: data.body,
-        icon: data.icon,
-        image: data.image
-    })
-})
+//     const data = event.data.json()
+
+//     self.registration.showNotification(data.title, {
+//         body: data.body,
+//         icon: data.icon,
+//         image: data.image
+//     })
+// })

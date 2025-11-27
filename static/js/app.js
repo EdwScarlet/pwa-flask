@@ -309,10 +309,10 @@ app.config(function ($routeProvider, $locationProvider) {
             templateUrl: "encuesta",
             controller: "encuestaCtrl"
         })
-        .when("/notificaciones", {
-            templateUrl: "notificaciones",
-            controller: "notificacionesCtrl"
-        })
+        // .when("/notificaciones", {
+        //     templateUrl: "notificaciones",
+        //     controller: "notificacionesCtrl"
+        // })
         .otherwise({
             redirectTo: "/"
         })
@@ -476,24 +476,24 @@ app.run(["$rootScope", "$location", "$timeout", function ($rootScope, $location,
 
 
             // swipe
-            if (path.indexOf("notificaciones") != -1) {
-                $rootScope.leftView = "Encuestas"
-                $rootScope.rightView = ""
-                $rootScope.leftViewLink = "#/encuestas"
-                $rootScope.rightViewLink = ""
-            }
-            else if (path.indexOf("encuestas") != -1) {
-                $rootScope.leftView = ""
-                $rootScope.rightView = "Notificaciones"
-                $rootScope.leftViewLink = ""
-                $rootScope.rightViewLink = "#/notificaciones"
-            }
-            else {
-                $rootScope.leftView = ""
-                $rootScope.rightView = ""
-                $rootScope.leftViewLink = ""
-                $rootScope.rightViewLink = ""
-            }
+            // if (path.indexOf("notificaciones") != -1) {
+            //     $rootScope.leftView = "Encuestas"
+            //     $rootScope.rightView = ""
+            //     $rootScope.leftViewLink = "#/encuestas"
+            //     $rootScope.rightViewLink = ""
+            // }
+            // else if (path.indexOf("encuestas") != -1) {
+            //     $rootScope.leftView = ""
+            //     $rootScope.rightView = "Notificaciones"
+            //     $rootScope.leftViewLink = ""
+            //     $rootScope.rightViewLink = "#/notificaciones"
+            // }
+            // else {
+            $rootScope.leftView = ""
+            $rootScope.rightView = ""
+            $rootScope.leftViewLink = ""
+            $rootScope.rightViewLink = ""
+            // }
 
             let offsetX
             let threshold
@@ -960,61 +960,60 @@ app.controller("encuestaCtrl", function ($scope, $http, $rootScope, $routeParams
     }
 })
 
+// let timesAccessRouteNotificaciones = 0
+// let lsNotificaciones = localStorage.getItem("flask2-notificaciones")
+// let notificaciones = (lsNotificaciones ? JSON.parse(lsNotificaciones) : [])
+// app.controller("notificacionesCtrl", function ($scope, $http, $rootScope) {
+//     function cargarNotificaciones() {
+//         $rootScope.sendingRequest = true
+//         $rootScope.incompleteRequest = false
+//         $rootScope.completeRequest = false
 
-let timesAccessRouteNotificaciones = 0
-let lsNotificaciones = localStorage.getItem("flask2-notificaciones")
-let notificaciones = (lsNotificaciones ? JSON.parse(lsNotificaciones) : [])
-app.controller("notificacionesCtrl", function ($scope, $http, $rootScope) {
-    function cargarNotificaciones() {
-        $rootScope.sendingRequest = true
-        $rootScope.incompleteRequest = false
-        $rootScope.completeRequest = false
+//         $.get("notificaciones/cargar", function (encuestas) {
+//             localStorage.setItem("flask2-notificaciones", JSON.stringify(encuestas))
+//             notificaciones = encuestas
+//             $scope.encuestas = encuestas
 
-        $.get("notificaciones/cargar", function (encuestas) {
-            localStorage.setItem("flask2-notificaciones", JSON.stringify(encuestas))
-            notificaciones = encuestas
-            $scope.encuestas = encuestas
+//             enableAll()
+//         })
 
-            enableAll()
-        })
+//         disableAll()
+//     }
 
-        disableAll()
-    }
+//     $scope.encuestas = notificaciones
 
-    $scope.encuestas = notificaciones
+//     if (timesAccessRouteNotificaciones == 0) {
+//         timesAccessRouteNotificaciones++
 
-    if (timesAccessRouteNotificaciones == 0) {
-        timesAccessRouteNotificaciones++
+//         cargarNotificaciones()
 
-        cargarNotificaciones()
+//         $(document).on("click", ".btn-cargar-notificaciones", cargarNotificaciones)
+//         $(document).on("click", ".btn-eliminar-notificacion", function (event) {
+//             const button = $(this)
+//             const id = button.data("id")
 
-        $(document).on("click", ".btn-cargar-notificaciones", cargarNotificaciones)
-        $(document).on("click", ".btn-eliminar-notificacion", function (event) {
-            const button = $(this)
-            const id = button.data("id")
+//             $.post("notificacion/eliminar", { id: id }, function (respuesta) {
+//                 cargarNotificaciones()
+//             })
 
-            $.post("notificacion/eliminar", { id: id }, function (respuesta) {
-                cargarNotificaciones()
-            })
+//             disableAll()
+//         })
+//         $(document).on("mouseenter", ".p-leer-notificacion", function (event) {
+//             const p = $(this)
+//             const id = p.parent().data("id")
 
-            disableAll()
-        })
-        $(document).on("mouseenter", ".p-leer-notificacion", function (event) {
-            const p = $(this)
-            const id = p.parent().data("id")
+//             if (p.parent().hasClass("active")) {
+//                 $.post("notificacion/marcarComoLeida", { id: id }, function (respuesta) {
+//                     p.parent().removeClass("active")
+//                     p.addClass("p-leer-notificacion")
+//                     enableAll()
+//                 })
 
-            if (p.parent().hasClass("active")) {
-                $.post("notificacion/marcarComoLeida", { id: id }, function (respuesta) {
-                    p.parent().removeClass("active")
-                    p.addClass("p-leer-notificacion")
-                    enableAll()
-                })
-
-                disableAll()
-            }
-        })
-    }
-})
+//                 disableAll()
+//             }
+//         })
+//     }
+// })
 
 document.addEventListener("DOMContentLoaded", function (event) {
     setTimeout(function () {
