@@ -852,7 +852,7 @@ app.controller("encuestasCtrl", function ($scope, $http, $rootScope) {
             $rootScope.encuesta = encuestas[index]
             $rootScope.encuesta.index = index
 
-            window.location = `#/encuestas/${id}`
+            window.location = `#/encuesta/${id}`
         })
 
         $(document).on("click", ".btn-eliminar-encuesta", function (event) {
